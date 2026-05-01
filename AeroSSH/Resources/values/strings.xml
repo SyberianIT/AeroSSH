@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AeroSSH</string>
+    
+    <!-- Connection Settings -->
+    <string name="connection_settings">Connection Settings</string>
+    <string name="host_hint">Host/IP</string>
+    <string name="port_hint">Port</string>
+    <string name="user_hint">Username</string>
+    <string name="pass_hint">Password</string>
+    <string name="save_server">Save Profile</string>
+    
+    <!-- Connection Control -->
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="reconnect">Reconnect</string>
+    
+    <!-- Status Messages -->
+    <string name="status_disconnected">Status: DISCONNECTED</string>
+    <string name="status_connected">Status: CONNECTED</string>
+    <string name="status_working">Status: WORKING</string>
+    
+    <!-- Command Section -->
+    <string name="command_section">Execute Command</string>
+    <string name="command_hint">Enter command</string>
+    <string name="run">Run</string>
+    <string name="open_shell">Open Shell</string>
+    <string name="send_shell">Send Input</string>
+    
+    <!-- Log Section -->
+    <string name="log_section">Log Output</string>
+    <string name="clear_log">Clear Log</string>
+    
+    <!-- Error Messages -->
+    <string name="error_invalid_host">Host and username are required.</string>
+    <string name="error_invalid_port">Port must be in range 1..65535.</string>
+    <string name="error_connect_first">Connect to server first.</string>
+    <string name="error_empty_command">Command cannot be empty.</string>
+    <string name="error_empty_input">Input cannot be empty.</string>
+    <string name="error_shell_not_open">Open shell first.</string>
+    <string name="error_connection_lost">Connection lost. Reconnecting...</string>
+    
+    <!-- Success Messages -->
+    <string name="server_saved">Server profile saved.</string>
+</resources>
