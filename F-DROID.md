@@ -1,53 +1,75 @@
-# F-Droid Publishing Guide
+# F-Droid Publishing Notes
 
-## Prerequisites
-1. Open-source license (MIT/Apache 2.0) ✓
-2. GitHub repository with public access ✓
-3. Proper metadata and documentation ✓
+## Prerequisites met
 
-## Publishing Steps
+- Apache-2.0 license (see [LICENSE](LICENSE))
+- Public GitHub repository
+- Reproducible build via plain `dotnet publish`
+- No proprietary dependencies (all NuGet packages are open-source)
 
-### 1. Add to F-Droid
+## Tagging
+
 ```bash
 git tag v1.1.0
 git push origin v1.1.0
 ```
 
-### 2. Create F-Droid Metadata
-File: `metadata/io.github.burse.aerossh.yml`
+## Suggested fdroiddata metadata
+
+File `metadata/io.github.syberianit.aerossh.yml`:
+
 ```yaml
 Categories:
   - System
 License: Apache-2.0
+AuthorName: SyberianIT
 SourceCode: https://github.com/SyberianIT/AeroSSH
 IssueTracker: https://github.com/SyberianIT/AeroSSH/issues
-Donation: https://github.com/sponsors/SyberianIT
-Summary: SSH Client for Android
-Description: |
-  AeroSSH is a lightweight, modern SSH client for Android built with .NET.
-  Features multiple sessions, SFTP file transfer, and interactive terminal.
-VCS: git|https://github.com/SyberianIT/AeroSSH.git
-Build:
+Summary: Open-source SSH client for Android
+Description: |-
+  AeroSSH is an open-source SSH client for Android built with .NET for Android.
+
+  Features:
+    * Connection profiles with encrypted storage
+    * Password and private-key authentication (RSA, ECDSA, Ed25519)
+    * TOFU host-key verification with SHA-256 fingerprints
+    * Interactive shell (xterm-256color)
+    * Quick command runner with per-profile history
+    * SFTP browser (list, upload, download, delete)
+    * Session logging with JSON/text export
+    * Dark / light / system theme
+    * Foreground service for backgrounded sessions
+
+RepoType: git
+Repo: https://github.com/SyberianIT/AeroSSH.git
+
+Builds:
   - versionName: 1.1.0
     versionCode: 2
     commit: v1.1.0
-    gradle: yes
-    prebuild: dotnet restore AeroSSH.slnx
-    build: dotnet publish -c Release -f net10.0-android
+    sudo:
+      - apt-get install -y dotnet-sdk-8.0
+      - dotnet workload install android
+    build: |
+      dotnet publish AeroSSH/AeroSSH.csproj -c Release -f net8.0-android
+    output: AeroSSH/bin/Release/net8.0-android/publish/io.github.syberianit.aerossh-Signed.apk
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+CurrentVersion: 1.1.0
+CurrentVersionCode: 2
 ```
 
-### 3. Submit to F-Droid
-1. Fork `fdroiddata` repository
-2. Add metadata file above
-3. Submit pull request
-4. F-Droid will review and build
+## Submission
 
-## Screenshots Required
-- App icon (512x512 PNG)
-- 2-3 screenshots (1080x1920 or 1440x2560)
-- Feature graphic (1024x500 PNG)
+1. Fork [fdroiddata](https://gitlab.com/fdroid/fdroiddata).
+2. Add the metadata file above.
+3. Open a merge request — F-Droid build server takes it from there.
 
-## Monitoring
-- Check build status on F-Droid website
-- New version typically appears within 1-2 weeks
-- F-Droid auto-updates existing installations
+## Assets to attach to the release
+
+Once the F-Droid bot starts indexing, you can supply (in `metadata/io.github.syberianit.aerossh/en-US/`):
+
+- `icon.png` — 512×512
+- `featureGraphic.png` — 1024×500
+- `phoneScreenshots/*.png` — 1080×1920 or larger

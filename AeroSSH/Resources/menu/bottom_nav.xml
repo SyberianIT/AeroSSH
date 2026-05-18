@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+      android:id="@+id/nav_command"
+      android:title="@string/tab_command"
+      android:icon="@drawable/ic_command" />
+  <item
+      android:id="@+id/nav_shell"
+      android:title="@string/tab_shell"
+      android:icon="@drawable/ic_terminal" />
+  <item
+      android:id="@+id/nav_sftp"
+      android:title="@string/tab_sftp"
+      android:icon="@drawable/ic_folder" />
+  <item
+      android:id="@+id/nav_logs"
+      android:title="@string/tab_logs"
+      android:icon="@drawable/ic_logs" />
+</menu>

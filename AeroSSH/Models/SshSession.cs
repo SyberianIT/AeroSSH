@@ -1,18 +1,11 @@
-namespace AeroSSH.Models
+namespace AeroSSH.Models;
+
+public class SshSession
 {
-    /// <summary>SSH сессия с метаданными подключения</summary>
-    public class SshSession
-    {
-        public string Id { get; } = Guid.NewGuid().ToString();
-        public string Host { get; set; }
-        public int Port { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public byte[] PrivateKey { get; set; }
-        public string KeyPassphrase { get; set; }
-        public bool IsConnected { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime LastActivity { get; set; } = DateTime.UtcNow;
-        public List<string> CommandHistory { get; set; } = new();
-    }
+    public string Id { get; init; } = Guid.NewGuid().ToString("N");
+    public ServerProfile Profile { get; init; } = new();
+    public DateTime ConnectedAt { get; init; } = DateTime.UtcNow;
+    public DateTime LastActivity { get; set; } = DateTime.UtcNow;
+
+    public string DisplayLabel => Profile.DisplayLabel;
 }

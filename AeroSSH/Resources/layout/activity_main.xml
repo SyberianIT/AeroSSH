@@ -1,278 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/background">
+    android:layout_height="match_parent">
 
-    <!-- Connection Section -->
-    <LinearLayout
+  <com.google.android.material.appbar.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fitsSystemWindows="true">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp"
-        android:background="@color/card_background"
-        android:layout_marginBottom="12dp">
+        android:layout_height="?attr/actionBarSize"
+        app:title="@string/app_name"
+        app:titleTextColor="?attr/colorOnPrimary"
+        android:background="?attr/colorPrimary" />
+  </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/connection_settings"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="@color/text_primary"
-            android:layout_marginBottom="8dp" />
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/profilesList"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:clipToPadding="false"
+      android:paddingTop="8dp"
+      android:paddingBottom="88dp"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
-
-            <EditText
-                android:id="@+id/hostEdit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/host_hint"
-                android:inputType="text"
-                android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_secondary"
-                android:background="@drawable/edit_text_background"
-                android:padding="8dp"
-                android:layout_marginEnd="8dp" />
-
-            <EditText
-                android:id="@+id/portEdit"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/port_hint"
-                android:inputType="number"
-                android:text="22"
-                android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_secondary"
-                android:background="@drawable/edit_text_background"
-                android:padding="8dp" />
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/userEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/user_hint"
-            android:inputType="text"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_secondary"
-            android:background="@drawable/edit_text_background"
-            android:padding="8dp"
-            android:layout_marginBottom="8dp" />
-
-        <EditText
-            android:id="@+id/passEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/pass_hint"
-            android:inputType="textPassword"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_secondary"
-            android:background="@drawable/edit_text_background"
-            android:padding="8dp"
-            android:layout_marginBottom="8dp" />
-
-        <Spinner
-            android:id="@+id/serverSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:background="@color/background" />
-
-        <Button
-            android:id="@+id/saveServerBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/save_server"
-            android:backgroundTint="@color/button_secondary"
-            android:textColor="@color/button_text" />
-    </LinearLayout>
-
-    <!-- Connection Control Section -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="12dp">
-
-        <Button
-            android:id="@+id/connectBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/connect"
-            android:backgroundTint="@color/button_success"
-            android:textColor="@color/button_text"
-            android:layout_marginEnd="4dp" />
-
-        <Button
-            android:id="@+id/disconnectBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/disconnect"
-            android:backgroundTint="@color/button_danger"
-            android:textColor="@color/button_text"
-            android:layout_marginEnd="4dp"
-            android:layout_marginStart="4dp" />
-
-        <Button
-            android:id="@+id/reconnectBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/reconnect"
-            android:backgroundTint="@color/button_primary"
-            android:textColor="@color/button_text"
-            android:layout_marginStart="4dp" />
-    </LinearLayout>
-
-    <!-- Status Display -->
+  <LinearLayout
+      android:id="@+id/emptyState"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:gravity="center"
+      android:padding="32dp"
+      android:visibility="gone">
+    <ImageView
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/ic_terminal"
+        android:alpha="0.4"
+        android:tint="?attr/colorOnSurface" />
     <TextView
-        android:id="@+id/statusView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/status_disconnected"
-        android:textStyle="bold"
-        android:textSize="14sp"
-        android:textColor="@color/status_disconnected"
-        android:padding="8dp"
-        android:background="@color/card_background"
-        android:layout_marginBottom="12dp" />
-
-    <!-- Command Execution Section -->
-    <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_marginTop="16dp"
+        android:text="@string/empty_profiles_title"
+        android:textAppearance="?attr/textAppearanceHeadline6" />
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp"
-        android:background="@color/card_background"
-        android:layout_marginBottom="12dp">
+        android:layout_marginTop="4dp"
+        android:textAlignment="center"
+        android:text="@string/empty_profiles_subtitle"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:alpha="0.7" />
+  </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/command_section"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="@color/text_primary"
-            android:layout_marginBottom="8dp" />
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/fabNew"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|end"
+      android:layout_margin="16dp"
+      android:contentDescription="@string/new_profile"
+      app:srcCompat="@drawable/ic_add" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
-
-            <EditText
-                android:id="@+id/commandEdit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/command_hint"
-                android:inputType="text"
-                android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_secondary"
-                android:background="@drawable/edit_text_background"
-                android:padding="8dp"
-                android:layout_marginEnd="4dp" />
-
-            <Button
-                android:id="@+id/runBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/run"
-                android:backgroundTint="@color/button_primary"
-                android:textColor="@color/button_text"
-                android:padding="4dp"
-                android:layout_marginStart="4dp" />
-        </LinearLayout>
-
-        <Spinner
-            android:id="@+id/historySpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background"
-            android:layout_marginBottom="8dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/openShellBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/open_shell"
-                android:backgroundTint="@color/button_primary"
-                android:textColor="@color/button_text"
-                android:layout_marginEnd="4dp" />
-
-            <Button
-                android:id="@+id/sendShellBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/send_shell"
-                android:backgroundTint="@color/button_primary"
-                android:textColor="@color/button_text"
-                android:layout_marginStart="4dp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- Log Section -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="8dp"
-        android:background="@color/card_background"
-        android:layout_marginBottom="8dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/log_section"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="@color/text_primary"
-            android:layout_marginBottom="8dp" />
-
-        <ScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginBottom="8dp">
-
-            <TextView
-                android:id="@+id/logView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/log_text"
-                android:textSize="12sp"
-                android:fontFamily="monospace"
-                android:padding="8dp"
-                android:text="" />
-        </ScrollView>
-
-        <Button
-            android:id="@+id/clearLogBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/clear_log"
-            android:backgroundTint="@color/button_secondary"
-            android:textColor="@color/button_text" />
-    </LinearLayout>
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

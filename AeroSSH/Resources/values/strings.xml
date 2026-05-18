@@ -1,45 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AeroSSH</string>
-    
-    <!-- Connection Settings -->
-    <string name="connection_settings">Connection Settings</string>
-    <string name="host_hint">Host/IP</string>
-    <string name="port_hint">Port</string>
-    <string name="user_hint">Username</string>
-    <string name="pass_hint">Password</string>
-    <string name="save_server">Save Profile</string>
-    
-    <!-- Connection Control -->
-    <string name="connect">Connect</string>
-    <string name="disconnect">Disconnect</string>
-    <string name="reconnect">Reconnect</string>
-    
-    <!-- Status Messages -->
-    <string name="status_disconnected">Status: DISCONNECTED</string>
-    <string name="status_connected">Status: CONNECTED</string>
-    <string name="status_working">Status: WORKING</string>
-    
-    <!-- Command Section -->
-    <string name="command_section">Execute Command</string>
-    <string name="command_hint">Enter command</string>
-    <string name="run">Run</string>
-    <string name="open_shell">Open Shell</string>
-    <string name="send_shell">Send Input</string>
-    
-    <!-- Log Section -->
-    <string name="log_section">Log Output</string>
-    <string name="clear_log">Clear Log</string>
-    
-    <!-- Error Messages -->
-    <string name="error_invalid_host">Host and username are required.</string>
-    <string name="error_invalid_port">Port must be in range 1..65535.</string>
-    <string name="error_connect_first">Connect to server first.</string>
-    <string name="error_empty_command">Command cannot be empty.</string>
-    <string name="error_empty_input">Input cannot be empty.</string>
-    <string name="error_shell_not_open">Open shell first.</string>
-    <string name="error_connection_lost">Connection lost. Reconnecting...</string>
-    
-    <!-- Success Messages -->
-    <string name="server_saved">Server profile saved.</string>
+  <string name="app_name">AeroSSH</string>
+  <string name="settings_title">Настройки</string>
+  <string name="session_title">Сессия</string>
+  <string name="profile_edit_title">Профиль</string>
+
+  <string name="empty_profiles_title">Нет профилей</string>
+  <string name="empty_profiles_subtitle">Добавьте сервер, чтобы начать.</string>
+  <string name="new_profile">Новый профиль</string>
+
+  <string name="profile_name_hint">Имя (опционально)</string>
+  <string name="host_hint">Хост</string>
+  <string name="port_hint">Порт</string>
+  <string name="user_hint">Пользователь</string>
+  <string name="pass_hint">Пароль</string>
+  <string name="passphrase_hint">Парольная фраза ключа</string>
+  <string name="auth_password">Пароль</string>
+  <string name="auth_key">Ключ</string>
+  <string name="pick_key">Загрузить ключ</string>
+  <string name="clear_key">Очистить</string>
+  <string name="key_none">Ключ не загружен</string>
+  <string name="key_loaded">Ключ загружен (%1$d байт)</string>
+  <string name="save_profile">Сохранить</string>
+
+  <string name="command_hint">Команда</string>
+  <string name="run">Запустить</string>
+  <string name="shell_input_hint">Ввод…</string>
+  <string name="send">Отправить</string>
+
+  <string name="tab_command">Команда</string>
+  <string name="tab_shell">Shell</string>
+  <string name="tab_sftp">SFTP</string>
+  <string name="tab_logs">Лог</string>
+
+  <string name="upload">Загрузить</string>
+  <string name="uploading">Загрузка %1$s…</string>
+  <string name="downloaded">Скачано %1$s</string>
+
+  <string name="export_json">Экспорт JSON</string>
+  <string name="export_text">Экспорт TXT</string>
+  <string name="clear_log">Очистить</string>
+  <string name="share_log">Поделиться логом</string>
+
+  <string name="theme_label">Тема</string>
+  <string name="theme_system">Системная</string>
+  <string name="theme_light">Светлая</string>
+  <string name="theme_dark">Тёмная</string>
+  <string name="about">О приложении</string>
+  <string name="about_text">AeroSSH — открытый SSH-клиент для Android. Apache-2.0.</string>
+
+  <string name="disconnect">Отключиться</string>
+  <string name="connect">Подключиться</string>
+  <string name="connection_failed">Не удалось подключиться</string>
+  <string name="ok">OK</string>
+  <string name="cancel">Отмена</string>
+  <string name="delete">Удалить</string>
+  <string name="edit">Изменить</string>
+  <string name="trust_and_connect">Доверять и подключиться</string>
+
+  <string name="host_key_unknown_title">Неизвестный ключ хоста</string>
+  <string name="host_key_unknown_message">Первое подключение к %1$s.\n\nОтпечаток ключа:\n%2$s\n\nПроверьте отпечаток через защищённый канал и доверьте ключ, если он совпадает.</string>
+  <string name="host_key_mismatch_title">Ключ хоста изменился!</string>
+  <string name="host_key_mismatch_message">Ключ %1$s отличается от сохранённого.\n\nПолучено: %2$s\nСохранено: %3$s\n\nЭто может быть атакой MitM. Не подключайтесь, если не уверены.</string>
+
+  <string name="delete_profile_title">Удалить профиль?</string>
+  <string name="delete_profile_message">Профиль «%1$s» будет удалён.</string>
+
+  <string name="error_required_fields">Заполните хост и пользователя</string>
+  <string name="error_invalid_port">Некорректный порт</string>
+
+  <string name="notif_channel_name">SSH-сессия</string>
+  <string name="notif_channel_desc">Поддержка активной SSH-сессии в фоне</string>
+  <string name="notif_default_title">AeroSSH активен</string>
+  <string name="notif_session_text">Сессия выполняется</string>
+  <string name="notif_stop">Остановить</string>
 </resources>

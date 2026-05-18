@@ -1,12 +1,14 @@
-namespace AeroSSH.Models
+namespace AeroSSH.Models;
+
+public enum LogLevel { Debug, Info, Warning, Error }
+public enum LogSource { System, Stdout, Stderr, Command }
+
+public class LogEntry
 {
-    /// <summary>Запись лога сессии</summary>
-    public class LogEntry
-    {
-        public DateTime Timestamp { get; set; } = DateTime.UtcNow;
-        public string SessionId { get; set; }
-        public string Level { get; set; } // INFO, ERROR, WARNING, DEBUG
-        public string Message { get; set; }
-        public string Source { get; set; } // STDOUT, STDERR, SYSTEM
-    }
+    public long Sequence { get; init; }
+    public DateTime Timestamp { get; init; } = DateTime.UtcNow;
+    public string SessionId { get; init; } = string.Empty;
+    public LogLevel Level { get; init; } = LogLevel.Info;
+    public LogSource Source { get; init; } = LogSource.System;
+    public string Message { get; init; } = string.Empty;
 }

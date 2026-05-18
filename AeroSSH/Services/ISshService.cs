@@ -1,16 +1,27 @@
 using AeroSSH.Models;
 
-namespace AeroSSH.Services
+namespace AeroSSH.Services;
+
+public interface ISshService : IDisposable
 {
-    /// <summary>Интерфейс SSH сервиса</summary>
-    public interface ISshService : IDisposable
-    {
-        Task<bool> ConnectAsync(SshSession session, IProgress<string> progress, CancellationToken ct);
-        Task<string> ExecuteCommandAsync(string command, CancellationToken ct);
-        Task DisconnectAsync();
-        Task<bool> UploadFileAsync(string localPath, string remotePath, CancellationToken ct);
-        Task<bool> DownloadFileAsync(string remotePath, string localPath, CancellationToken ct);
-        IAsyncEnumerable<string> GetShellStreamAsync(CancellationToken ct);
-        bool IsConnected { get; }
-    }
+    bool IsConnected { get; }
+    ServerProfile Profile { get; }
+
+    event EventHandler<string>? ShellDataReceived;
+
+    Task ConnectAsync(CancellationToken ct);
+    Task DisconnectAsync();
+
+    Task<CommandResult> ExecuteCommandAsync(string command, CancellationToken ct);
+
+    Task OpenShellAsync(int columns, int rows, CancellationToken ct);
+    Task SendShellAsync(string data, CancellationToken ct);
+    Task CloseShellAsync();
+
+    Task<IReadOnlyList<SftpEntry>> SftpListDirectoryAsync(string path, CancellationToken ct);
+    Task SftpUploadAsync(Stream localData, string remotePath, IProgress<long>? progress, CancellationToken ct);
+    Task SftpDownloadAsync(string remotePath, Stream localData, IProgress<long>? progress, CancellationToken ct);
+    Task SftpDeleteAsync(string remotePath, bool isDirectory, CancellationToken ct);
 }
+
+public record CommandResult(int ExitCode, string Stdout, string Stderr);
