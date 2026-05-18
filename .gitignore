@@ -1,0 +1,35 @@
+## .NET / Visual Studio
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+.vs/
+.idea/
+.vscode/
+*.swp
+*.bak
+*.tmp
+
+## Android
+*.apk
+*.aab
+*.keystore
+*.jks
+keystore.properties
+local.properties
+
+## Build outputs
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+publish/
+
+## NuGet
+*.nupkg
+packages/
+
+## OS
+.DS_Store
+Thumbs.db
