@@ -1,29 +1,30 @@
 # Changelog
 
-## [1.1.0] - 2026-05-01
+## [1.1.0] - 2026-05-18
 
 ### Added
-- Multiple SSH sessions support
-- Interactive shell mode
-- SFTP file transfer (upload/download)
-- Command history
-- Session logging and export
-- Dark/Light theme support
-- Foreground service for background SSH
-- Server profile management
-- Material Design UI
+- Connection profiles with AES-256 encrypted storage (AndroidX `EncryptedSharedPreferences`)
+- Password and private-key authentication (RSA, ECDSA, Ed25519 via SSH.NET 2024.2)
+- TOFU host-key verification: first-use trust dialog, fingerprint mismatch warning
+- Quick command runner with per-profile history (top 100, deduplicated)
+- Interactive shell tab (xterm-256color, 120×30)
+- SFTP browser: list, upload, download, delete — uses Android Storage Access Framework
+- Session log: in-memory ring with JSON and plain-text export via Android Share
+- Dark / Light / System theme (Material Components DayNight)
+- Foreground service notification keeps SSH alive in background
+- xUnit test project for storage logic (14 tests covering ProfileStore, HostKeyStore, CommandHistoryStore)
+- GitHub Actions CI building APK and running tests
+
+### Changed
+- Full rewrite. Target framework `net8.0-android` (minSdk 26, target 34)
+- ApplicationId: `io.github.syberianit.aerossh`
+- UI rebuilt with Material Components and `androidx.coordinatorlayout` / `BottomNavigationView`
 
 ### Security
-- Secure password storage
-- SSH.NET library for cryptography
-- Private key support (RSA, ECDSA, Ed25519)
+- Encrypted credential storage via Android Keystore-backed master key
+- No `cleartextTrafficPermitted` for HTTP; SSH connections go via SSH.NET only
+- Host-key checks fail closed on unknown or mismatched fingerprints
 
-### Performance
-- Async/await throughout
-- Efficient string handling
-- Low memory footprint
+## [1.0.0] - 2026-04-01
 
-### Fixed
-- Connection timeout handling
-- Proper resource cleanup
-- UI thread safety
+Initial prototype scaffolding.
