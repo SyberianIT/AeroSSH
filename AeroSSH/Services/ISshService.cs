@@ -22,6 +22,8 @@ public interface ISshService : IDisposable
     Task SftpUploadAsync(Stream localData, string remotePath, IProgress<long>? progress, CancellationToken ct);
     Task SftpDownloadAsync(string remotePath, Stream localData, IProgress<long>? progress, CancellationToken ct);
     Task SftpDeleteAsync(string remotePath, bool isDirectory, CancellationToken ct);
+    Task SftpCreateDirectoryAsync(string remotePath, CancellationToken ct);
+    Task SftpRenameAsync(string remotePath, string newPath, CancellationToken ct);
 }
 
 public record CommandResult(int ExitCode, string Stdout, string Stderr);

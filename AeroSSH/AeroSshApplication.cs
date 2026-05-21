@@ -10,6 +10,7 @@ public class AeroSshApplication : Application
     public static AeroSshApplication Instance { get; private set; } = null!;
 
     public SecurePreferences SecurePrefs { get; private set; } = null!;
+    public AppPreferences AppPrefs { get; private set; } = null!;
     public ProfileStore Profiles { get; private set; } = null!;
     public HostKeyStore HostKeys { get; private set; } = null!;
     public CommandHistoryStore History { get; private set; } = null!;
@@ -26,6 +27,7 @@ public class AeroSshApplication : Application
         ThemeManager.ApplyStoredTheme(this);
 
         SecurePrefs = new SecurePreferences(this);
+        AppPrefs = new AppPreferences(this);
         Profiles = new ProfileStore(SecurePrefs);
         HostKeys = new HostKeyStore(SecurePrefs);
         History = new CommandHistoryStore(SecurePrefs);

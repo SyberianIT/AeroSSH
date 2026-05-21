@@ -9,4 +9,11 @@
   <color name="surface">#FFFFFF</color>
   <color name="on_background">#0A0E14</color>
   <color name="on_surface">#0A0E14</color>
+
+  <color name="log_info">#1565C0</color>
+  <color name="log_warning">#E65100</color>
+  <color name="log_error">#C62828</color>
+  <color name="log_debug">#6A737D</color>
+  <color name="log_stdout">#2E7D32</color>
+  <color name="log_command">#6A1B9A</color>
 </resources>
