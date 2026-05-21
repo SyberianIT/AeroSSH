@@ -70,33 +70,37 @@
           android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <RadioGroup
+    <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/authGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="12dp">
-      <RadioButton
-          android:id="@+id/radioPassword"
-          android:layout_width="wrap_content"
+        android:layout_marginTop="12dp"
+        app:singleSelection="true"
+        app:selectionRequired="true">
+      <Button
+          android:id="@+id/authPassword"
+          style="?attr/materialButtonOutlinedStyle"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:text="@string/auth_password"
-          android:checked="true" />
-      <RadioButton
-          android:id="@+id/radioKey"
-          android:layout_width="wrap_content"
+          android:layout_weight="1"
+          android:text="@string/auth_password" />
+      <Button
+          android:id="@+id/authKey"
+          style="?attr/materialButtonOutlinedStyle"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:text="@string/auth_key"
-          android:layout_marginStart="12dp" />
-    </RadioGroup>
+          android:layout_weight="1"
+          android:text="@string/auth_key" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.PasswordToggle"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:hint="@string/pass_hint">
+        android:hint="@string/pass_hint"
+        app:endIconMode="password_toggle">
       <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/editPassword"
           android:layout_width="match_parent"
@@ -140,11 +144,12 @@
             android:text="@string/clear_key" />
       </LinearLayout>
       <com.google.android.material.textfield.TextInputLayout
-          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.PasswordToggle"
+          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"
-          android:hint="@string/passphrase_hint">
+          android:hint="@string/passphrase_hint"
+          app:endIconMode="password_toggle">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editPassphrase"
             android:layout_width="match_parent"
@@ -153,12 +158,35 @@
       </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnSaveProfile"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/save_profile" />
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+      <Button
+          android:id="@+id/btnTestConnection"
+          style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="@string/test_connection" />
+      <Button
+          android:id="@+id/btnSaveProfile"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:layout_marginStart="8dp"
+          android:text="@string/save_profile" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/testStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:fontFamily="monospace"
+        android:visibility="gone" />
 
   </LinearLayout>
 </ScrollView>

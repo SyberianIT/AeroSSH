@@ -2,8 +2,10 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Views;
+using Android.Widget;
 using AndroidX.AppCompat.App;
 using AndroidX.Fragment.App;
+using Fragment = AndroidX.Fragment.App.Fragment;
 using AeroSSH.Fragments;
 using AeroSSH.Models;
 using AeroSSH.Services;
@@ -20,7 +22,11 @@ public class SessionActivity : AppCompatActivity
 
     private ServerProfile? _profile;
     private SshSession? _session;
-    private View _progress = null!;
+    private View _connectingPanel = null!;
+    private View _errorPanel = null!;
+    private TextView _connectingStatus = null!;
+    private TextView _connectingHost = null!;
+    private TextView _errorMessage = null!;
     private BottomNavigationView _bottomNav = null!;
     private CancellationTokenSource? _connectCts;
 
@@ -34,9 +40,16 @@ public class SessionActivity : AppCompatActivity
         SetSupportActionBar(FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar));
         SupportActionBar?.SetDisplayHomeAsUpEnabled(true);
 
-        _progress = FindViewById<View>(Resource.Id.connectingProgress)!;
+        _connectingPanel = FindViewById<View>(Resource.Id.connectingPanel)!;
+        _errorPanel = FindViewById<View>(Resource.Id.errorPanel)!;
+        _connectingStatus = FindViewById<TextView>(Resource.Id.connectingStatus)!;
+        _connectingHost = FindViewById<TextView>(Resource.Id.connectingHost)!;
+        _errorMessage = FindViewById<TextView>(Resource.Id.errorMessage)!;
         _bottomNav = FindViewById<BottomNavigationView>(Resource.Id.bottomNav)!;
         _bottomNav.ItemSelected += (_, e) => ShowTab(e.Item.ItemId);
+
+        FindViewById<Button>(Resource.Id.btnRetry)!.Click += async (_, _) => await ConnectAsync();
+        FindViewById<Button>(Resource.Id.btnCancelConnect)!.Click += (_, _) => Finish();
 
         var profileId = Intent?.GetStringExtra(ExtraProfileId);
         if (string.IsNullOrEmpty(profileId)) { Finish(); return; }
@@ -45,40 +58,77 @@ public class SessionActivity : AppCompatActivity
         if (_profile == null) { Finish(); return; }
 
         Title = _profile.DisplayLabel;
+        if (SupportActionBar != null)
+            SupportActionBar.Subtitle = $"{_profile.Username}@{_profile.Host}:{_profile.Port}";
+
+        _connectingHost.Text = $"{_profile.Username}@{_profile.Host}:{_profile.Port}";
         _ = ConnectAsync();
     }
 
     private async Task ConnectAsync()
     {
+        _connectCts?.Cancel();
         _connectCts = new CancellationTokenSource();
-        _progress.Visibility = ViewStates.Visible;
-        _bottomNav.Visibility = ViewStates.Gone;
+
+        ShowConnecting(GetString(Resource.String.status_resolving)!);
 
         try
         {
+            await Task.Delay(50);
+            ShowConnecting(GetString(Resource.String.status_connecting)!);
             _session = await AeroSshApplication.Instance.Sessions.ConnectAsync(_profile!, _connectCts.Token);
+
+            ShowConnecting(GetString(Resource.String.status_ready)!);
             AeroSshApplication.Instance.Profiles.TouchLastUsed(_profile!.Id);
             AeroSshApplication.Instance.Logs.Add(_session.Id, $"Connected to {_profile.DisplayLabel}");
             SshForegroundService.Start(this, _profile.DisplayLabel);
 
-            _progress.Visibility = ViewStates.Gone;
-            _bottomNav.Visibility = ViewStates.Visible;
-            _bottomNav.SelectedItemId = Resource.Id.nav_command;
+            ShowSession();
         }
         catch (HostKeyVerificationException ex)
         {
-            _progress.Visibility = ViewStates.Gone;
+            HideAllOverlays();
             ShowHostKeyDialog(ex);
+        }
+        catch (System.OperationCanceledException)
+        {
+            Finish();
         }
         catch (Exception ex)
         {
-            _progress.Visibility = ViewStates.Gone;
-            new MaterialAlertDialogBuilder(this)
-                .SetTitle(Resource.String.connection_failed)!
-                .SetMessage(ex.Message)!
-                .SetPositiveButton(Resource.String.ok, (_, _) => Finish())!
-                .Show();
+            ShowError(ex.Message);
         }
+    }
+
+    private void ShowConnecting(string status)
+    {
+        _connectingStatus.Text = status;
+        _connectingPanel.Visibility = ViewStates.Visible;
+        _errorPanel.Visibility = ViewStates.Gone;
+        _bottomNav.Visibility = ViewStates.Gone;
+    }
+
+    private void ShowError(string message)
+    {
+        _errorMessage.Text = message;
+        _connectingPanel.Visibility = ViewStates.Gone;
+        _errorPanel.Visibility = ViewStates.Visible;
+        _bottomNav.Visibility = ViewStates.Gone;
+    }
+
+    private void ShowSession()
+    {
+        _connectingPanel.Visibility = ViewStates.Gone;
+        _errorPanel.Visibility = ViewStates.Gone;
+        _bottomNav.Visibility = ViewStates.Visible;
+        ShowTab(Resource.Id.nav_command);
+        _bottomNav.SelectedItemId = Resource.Id.nav_command;
+    }
+
+    private void HideAllOverlays()
+    {
+        _connectingPanel.Visibility = ViewStates.Gone;
+        _errorPanel.Visibility = ViewStates.Gone;
     }
 
     private void ShowHostKeyDialog(HostKeyVerificationException ex)

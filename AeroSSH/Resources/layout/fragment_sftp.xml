@@ -10,28 +10,71 @@
       android:layout_height="match_parent"
       android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/sftpPath"
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:fontFamily="monospace"
         android:background="?attr/colorSurface"
-        android:text="." />
+        android:scrollbars="none">
+      <LinearLayout
+          android:id="@+id/sftpBreadcrumb"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:padding="6dp" />
+    </HorizontalScrollView>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/sftpRefresh"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-      <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/sftpList"
+      <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+          android:id="@+id/sftpRefresh"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:clipToPadding="false"
-          android:paddingBottom="88dp" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+          android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sftpList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="96dp" />
+      </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+      <LinearLayout
+          android:id="@+id/sftpProgress"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom"
+          android:orientation="vertical"
+          android:padding="8dp"
+          android:background="?attr/colorSurface"
+          android:visibility="gone">
+        <TextView
+            android:id="@+id/sftpProgressLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:fontFamily="monospace" />
+        <ProgressBar
+            android:id="@+id/sftpProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100" />
+      </LinearLayout>
+    </FrameLayout>
   </LinearLayout>
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/fabMkdir"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|end"
+      android:layout_margin="16dp"
+      android:layout_marginBottom="88dp"
+      android:contentDescription="@string/mkdir"
+      app:fabSize="mini"
+      app:srcCompat="@drawable/ic_folder_new" />
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton
       android:id="@+id/fabUpload"

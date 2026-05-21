@@ -16,9 +16,11 @@
 - GitHub Actions CI building APK and running tests
 
 ### Changed
-- Full rewrite. Target framework `net8.0-android` (minSdk 26, target 34)
+- Full rewrite. Target framework `net10.0-android` (minSdk 26, target 35)
 - ApplicationId: `io.github.syberianit.aerossh`
 - UI rebuilt with Material Components and `androidx.coordinatorlayout` / `BottomNavigationView`
+- NuGet packages refreshed to versions compatible with the .NET 10 Android workload
+  (SSH.NET 2025.0.0, Xamarin.AndroidX.* on the 1.7/1.8/1.10/1.15 lines, Material 1.13)
 
 ### Security
 - Encrypted credential storage via Android Keystore-backed master key

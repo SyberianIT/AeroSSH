@@ -21,7 +21,7 @@ Open-source SSH client for Android built with .NET for Android.
 ## Requirements
 
 - Android 8.0+ (API 26)
-- For building: .NET 8 SDK with the `android` workload
+- For building: .NET 10 SDK with the `android` workload
   - `dotnet workload install android`
 
 ## Build
@@ -31,13 +31,13 @@ Open-source SSH client for Android built with .NET for Android.
 dotnet build AeroSSH/AeroSSH.csproj
 
 # Release APK
-dotnet publish AeroSSH/AeroSSH.csproj -c Release -f net8.0-android
+dotnet publish AeroSSH/AeroSSH.csproj -c Release -f net10.0-android
 
 # Tests
 dotnet test AeroSSH.Tests/AeroSSH.Tests.csproj
 ```
 
-Output APK: `AeroSSH/bin/Release/net8.0-android/publish/io.github.syberianit.aerossh-Signed.apk`
+Output APK: `AeroSSH/bin/Release/net10.0-android/publish/io.github.syberianit.aerossh-Signed.apk`
 
 ## Project layout
 

@@ -6,9 +6,10 @@ using AndroidX.AppCompat.App;
 using AndroidX.RecyclerView.Widget;
 using AeroSSH.Activities;
 using AeroSSH.Adapters;
+using AeroSSH.Helpers;
 using AeroSSH.Models;
-using Google.Android.Material.Dialog;
 using Google.Android.Material.FloatingActionButton;
+using Google.Android.Material.Snackbar;
 
 namespace AeroSSH;
 
@@ -23,6 +24,7 @@ public class MainActivity : AppCompatActivity
     private ProfileAdapter _adapter = null!;
     private RecyclerView _list = null!;
     private View _emptyState = null!;
+    private View _root = null!;
 
     protected override void OnCreate(Bundle? savedInstanceState)
     {
@@ -32,13 +34,14 @@ public class MainActivity : AppCompatActivity
 
         _list = FindViewById<RecyclerView>(Resource.Id.profilesList)!;
         _emptyState = FindViewById<View>(Resource.Id.emptyState)!;
+        _root = FindViewById<View>(Android.Resource.Id.Content)!;
 
-        _adapter = new ProfileAdapter(
-            onClick: OpenProfile,
-            onEdit: EditProfile,
-            onDelete: DeleteProfile);
+        _adapter = new ProfileAdapter(onClick: OpenProfile, onEdit: EditProfile);
         _list.SetLayoutManager(new LinearLayoutManager(this));
         _list.SetAdapter(_adapter);
+
+        var swipe = new ItemTouchHelper(new SwipeToDeleteCallback(this, OnSwipedDelete));
+        swipe.AttachToRecyclerView(_list);
 
         FindViewById<FloatingActionButton>(Resource.Id.fabNew)!.Click += (_, _) => EditProfile(null);
         RefreshList();
@@ -73,18 +76,20 @@ public class MainActivity : AppCompatActivity
         StartActivity(intent);
     }
 
-    private void DeleteProfile(ServerProfile profile)
+    private void OnSwipedDelete(int position)
     {
-        new MaterialAlertDialogBuilder(this)
-            .SetTitle(Resource.String.delete_profile_title)!
-            .SetMessage(GetString(Resource.String.delete_profile_message, profile.DisplayLabel))!
-            .SetPositiveButton(Resource.String.delete, (_, _) =>
+        if (position < 0 || position >= _adapter.ItemCount) return;
+        var removed = _adapter.RemoveAt(position);
+        AeroSshApplication.Instance.Profiles.Delete(removed.Id);
+
+        var bar = Snackbar.Make(_root, GetString(Resource.String.profile_deleted, removed.DisplayLabel)!, Snackbar.LengthLong)!
+            .SetAction(Resource.String.undo, _ =>
             {
-                AeroSshApplication.Instance.Profiles.Delete(profile.Id);
-                RefreshList();
-            })!
-            .SetNegativeButton(Resource.String.cancel, (IDialogInterfaceOnClickListener?)null)!
-            .Show();
+                AeroSshApplication.Instance.Profiles.Save(removed);
+                _adapter.Insert(Math.Min(position, _adapter.ItemCount), removed);
+            })!;
+        bar.AddCallback(new SnackbarCallback(this));
+        bar.Show();
     }
 
     public override bool OnCreateOptionsMenu(IMenu? menu)
@@ -101,5 +106,16 @@ public class MainActivity : AppCompatActivity
             return true;
         }
         return base.OnOptionsItemSelected(item);
+    }
+
+    private class SnackbarCallback : Snackbar.Callback
+    {
+        private readonly MainActivity _owner;
+        public SnackbarCallback(MainActivity owner) => _owner = owner;
+        public override void OnDismissed(Snackbar? transientBottomBar, int e)
+        {
+            base.OnDismissed(transientBottomBar, e);
+            _owner.RefreshList();
+        }
     }
 }

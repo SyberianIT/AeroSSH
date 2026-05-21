@@ -2,6 +2,7 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using AndroidX.Fragment.App;
+using Fragment = AndroidX.Fragment.App.Fragment;
 using AeroSSH.Activities;
 using AeroSSH.Models;
 using Google.Android.Material.TextField;

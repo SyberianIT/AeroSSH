@@ -233,6 +233,16 @@ public class SshServiceImpl : ISshService
         }, ct);
     }
 
+    public Task SftpCreateDirectoryAsync(string remotePath, CancellationToken ct)
+    {
+        return Task.Run(() => EnsureSftp().CreateDirectory(remotePath), ct);
+    }
+
+    public Task SftpRenameAsync(string remotePath, string newPath, CancellationToken ct)
+    {
+        return Task.Run(() => EnsureSftp().RenameFile(remotePath, newPath), ct);
+    }
+
     private ConnectionInfo BuildConnectionInfo(ServerProfile p)
     {
         AuthenticationMethod auth = p.AuthMethod == AuthMethod.PrivateKey && p.PrivateKey is { Length: > 0 }

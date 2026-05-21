@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: "10.0.x"
       - name: Restore tests
         run: dotnet restore AeroSSH.Tests/AeroSSH.Tests.csproj
       - name: Run tests
@@ -38,16 +38,16 @@ jobs:
           java-version: "17"
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: "10.0.x"
       - name: Install Android workload
         run: dotnet workload install android
       - name: Restore
         run: dotnet restore AeroSSH/AeroSSH.csproj
       - name: Build (Release)
-        run: dotnet publish AeroSSH/AeroSSH.csproj -c Release -f net8.0-android --no-restore
+        run: dotnet publish AeroSSH/AeroSSH.csproj -c Release -f net10.0-android --no-restore
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: aerossh-apk
-          path: AeroSSH/bin/Release/net8.0-android/publish/*-Signed.apk
+          path: AeroSSH/bin/Release/net10.0-android/publish/*-Signed.apk
           if-no-files-found: error

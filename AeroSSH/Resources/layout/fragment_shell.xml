@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:orientation="vertical">
 
   <ScrollView
       android:id="@+id/shellScroll"
@@ -17,24 +16,54 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
-        android:textSize="12sp"
+        android:textSize="13sp"
         android:textIsSelectable="true"
         android:text="" />
   </ScrollView>
+
+  <HorizontalScrollView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fillViewport="true"
+      android:scrollbars="none"
+      android:background="?attr/colorSurface">
+    <LinearLayout
+        android:id="@+id/quickKeys"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="4dp">
+      <Button android:id="@+id/keyTab"   style="@style/Widget.AeroSSH.QuickKey" android:text="Tab" />
+      <Button android:id="@+id/keyEsc"   style="@style/Widget.AeroSSH.QuickKey" android:text="Esc" />
+      <Button android:id="@+id/keyCtrlC" style="@style/Widget.AeroSSH.QuickKey" android:text="^C" />
+      <Button android:id="@+id/keyCtrlD" style="@style/Widget.AeroSSH.QuickKey" android:text="^D" />
+      <Button android:id="@+id/keyCtrlL" style="@style/Widget.AeroSSH.QuickKey" android:text="^L" />
+      <Button android:id="@+id/keyCtrlZ" style="@style/Widget.AeroSSH.QuickKey" android:text="^Z" />
+      <Button android:id="@+id/keyUp"    style="@style/Widget.AeroSSH.QuickKey" android:text="↑" />
+      <Button android:id="@+id/keyDown"  style="@style/Widget.AeroSSH.QuickKey" android:text="↓" />
+      <Button android:id="@+id/keyLeft"  style="@style/Widget.AeroSSH.QuickKey" android:text="←" />
+      <Button android:id="@+id/keyRight" style="@style/Widget.AeroSSH.QuickKey" android:text="→" />
+      <Button android:id="@+id/keyPipe"  style="@style/Widget.AeroSSH.QuickKey" android:text="|" />
+      <Button android:id="@+id/keyTilde" style="@style/Widget.AeroSSH.QuickKey" android:text="~" />
+      <Button android:id="@+id/keySlash" style="@style/Widget.AeroSSH.QuickKey" android:text="/" />
+    </LinearLayout>
+  </HorizontalScrollView>
 
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
-      android:layout_marginTop="8dp">
+      android:padding="8dp"
+      android:background="?attr/colorSurface">
     <EditText
         android:id="@+id/shellInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:hint="@string/shell_input_hint"
-        android:inputType="text|textNoSuggestions"
-        android:imeOptions="actionSend"
+        android:inputType="textVisiblePassword"
+        android:imeOptions="actionSend|flagNoFullscreen"
+        android:autofillHints="off"
         android:fontFamily="monospace" />
     <Button
         android:id="@+id/btnSend"

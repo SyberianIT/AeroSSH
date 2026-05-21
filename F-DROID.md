@@ -48,11 +48,11 @@ Builds:
     versionCode: 2
     commit: v1.1.0
     sudo:
-      - apt-get install -y dotnet-sdk-8.0
+      - apt-get install -y dotnet-sdk-10.0
       - dotnet workload install android
     build: |
-      dotnet publish AeroSSH/AeroSSH.csproj -c Release -f net8.0-android
-    output: AeroSSH/bin/Release/net8.0-android/publish/io.github.syberianit.aerossh-Signed.apk
+      dotnet publish AeroSSH/AeroSSH.csproj -c Release -f net10.0-android
+    output: AeroSSH/bin/Release/net10.0-android/publish/io.github.syberianit.aerossh-Signed.apk
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
