@@ -3,6 +3,7 @@ using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
 using AndroidX.Fragment.App;
+using Fragment = AndroidX.Fragment.App.Fragment;
 using AeroSSH.Activities;
 using AeroSSH.Services;
 

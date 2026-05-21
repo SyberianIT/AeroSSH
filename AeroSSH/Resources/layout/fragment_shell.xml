@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:hint="@string/shell_input_hint"
-        android:inputType="text|textNoSuggestions|textNoAutoCorrect"
+        android:inputType="textVisiblePassword"
         android:imeOptions="actionSend|flagNoFullscreen"
         android:autofillHints="off"
         android:fontFamily="monospace" />

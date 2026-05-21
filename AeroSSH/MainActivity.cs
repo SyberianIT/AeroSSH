@@ -81,14 +81,15 @@ public class MainActivity : AppCompatActivity
         if (position < 0 || position >= _adapter.ItemCount) return;
         var removed = _adapter.RemoveAt(position);
         AeroSshApplication.Instance.Profiles.Delete(removed.Id);
-        Snackbar.Make(_root, GetString(Resource.String.profile_deleted, removed.DisplayLabel)!, Snackbar.LengthLong)!
+
+        var bar = Snackbar.Make(_root, GetString(Resource.String.profile_deleted, removed.DisplayLabel)!, Snackbar.LengthLong)!
             .SetAction(Resource.String.undo, _ =>
             {
                 AeroSshApplication.Instance.Profiles.Save(removed);
                 _adapter.Insert(Math.Min(position, _adapter.ItemCount), removed);
-            })!
-            .AddCallback(new SnackbarCallback(this))
-            .Show();
+            })!;
+        bar.AddCallback(new SnackbarCallback(this));
+        bar.Show();
     }
 
     public override bool OnCreateOptionsMenu(IMenu? menu)

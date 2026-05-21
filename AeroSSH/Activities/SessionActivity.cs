@@ -5,6 +5,7 @@ using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
 using AndroidX.Fragment.App;
+using Fragment = AndroidX.Fragment.App.Fragment;
 using AeroSSH.Fragments;
 using AeroSSH.Models;
 using AeroSSH.Services;
@@ -89,7 +90,7 @@ public class SessionActivity : AppCompatActivity
             HideAllOverlays();
             ShowHostKeyDialog(ex);
         }
-        catch (OperationCanceledException)
+        catch (System.OperationCanceledException)
         {
             Finish();
         }

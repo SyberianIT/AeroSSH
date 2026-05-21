@@ -6,6 +6,7 @@ using Android.Widget;
 using AndroidX.Activity.Result;
 using AndroidX.Activity.Result.Contract;
 using AndroidX.Fragment.App;
+using Fragment = AndroidX.Fragment.App.Fragment;
 using AndroidX.RecyclerView.Widget;
 using AndroidX.SwipeRefreshLayout.Widget;
 using AeroSSH.Activities;

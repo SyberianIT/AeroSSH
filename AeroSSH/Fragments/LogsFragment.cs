@@ -4,6 +4,7 @@ using Android.Views;
 using Android.Widget;
 using AndroidX.Core.Content;
 using AndroidX.Fragment.App;
+using Fragment = AndroidX.Fragment.App.Fragment;
 using AndroidX.RecyclerView.Widget;
 using AeroSSH.Activities;
 using AeroSSH.Adapters;
@@ -51,12 +52,7 @@ public class LogsFragment : Fragment
 
         _filter = AeroSshApplication.Instance.AppPrefs.LogFilter;
         ApplyFilterToChips();
-        _chips.CheckedChange += (_, e) =>
-        {
-            _filter = e.CheckedIds.Count > 0 ? ChipIdToFilter(e.CheckedIds[0]) : "all";
-            AeroSshApplication.Instance.AppPrefs.LogFilter = _filter;
-            Refresh();
-        };
+        _chips.SetOnCheckedStateChangeListener(new ChipFilterListener(this));
 
         _search.TextChanged += (_, e) =>
         {
@@ -151,9 +147,22 @@ public class LogsFragment : Fragment
         }
     }
 
+    private class ChipFilterListener : Java.Lang.Object, ChipGroup.IOnCheckedStateChangeListener
+    {
+        private readonly LogsFragment _owner;
+        public ChipFilterListener(LogsFragment owner) => _owner = owner;
+        public void OnCheckedChanged(ChipGroup group, IList<Java.Lang.Integer> checkedIds)
+        {
+            var first = checkedIds.Count > 0 ? checkedIds[0].IntValue() : 0;
+            _owner._filter = first != 0 ? ChipIdToFilter(first) : "all";
+            AeroSshApplication.Instance.AppPrefs.LogFilter = _owner._filter;
+            _owner.Refresh();
+        }
+    }
+
     private void ShareFile(string path)
     {
-        var file = new File(path);
+        var file = new Java.IO.File(path);
         var uri = FileProvider.GetUriForFile(Activity!, $"{Activity!.PackageName}.fileprovider", file);
         var intent = new Intent(Intent.ActionSend);
         intent.SetType(path.EndsWith(".json") ? "application/json" : "text/plain");

@@ -60,12 +60,14 @@ public class SettingsActivity : AppCompatActivity
         slider.Value = prefs.TerminalFontSize;
         label.Text = GetString(Resource.String.font_size_value, prefs.TerminalFontSize);
 
+#pragma warning disable XAOBS001, CS0618
         slider.AddOnChangeListener(new SliderListener((s, value) =>
         {
             var size = (int)value;
             prefs.TerminalFontSize = size;
             label.Text = GetString(Resource.String.font_size_value, size);
         }));
+#pragma warning restore XAOBS001, CS0618
     }
 
     private void InitDefaultPort()
@@ -100,16 +102,15 @@ public class SettingsActivity : AppCompatActivity
         return base.OnOptionsItemSelected(item);
     }
 
-    private class SliderListener : Java.Lang.Object, Slider.IOnChangeListener, Google.Android.Material.Slider.IBaseOnChangeListener
+#pragma warning disable XAOBS001, CS0618
+    private class SliderListener : Java.Lang.Object, Google.Android.Material.Slider.IBaseOnChangeListener
     {
         private readonly Action<Slider, float> _onChange;
         public SliderListener(Action<Slider, float> onChange) => _onChange = onChange;
-
-        public void OnValueChange(Slider slider, float value, bool fromUser) => _onChange(slider, value);
-
-        public void OnValueChange(Java.Lang.Object? slider, float value, bool fromUser)
+        public void OnValueChange(Java.Lang.Object slider, float value, bool fromUser)
         {
             if (slider is Slider s) _onChange(s, value);
         }
     }
+#pragma warning restore XAOBS001, CS0618
 }
